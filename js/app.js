@@ -1,5 +1,52 @@
 'use strict';
 
+// 计分对象，用于计算得分等
+var Util = function (score, heart) {
+    this.score = score; // 得分
+    this.heart = heart; // 生命
+}
+// 绘制生命
+Util.prototype.renderHeart = function () {
+    ctx.drawImage(Resources.get('images/Heart.png'), TILE_WIDTH * 4, 0, 30, 50);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '24px Arial';
+    ctx.fillText(' × ' + this.heart.toString(), TILE_WIDTH * 4 + 35, 34);
+}
+// 更新生命
+Util.prototype.updateHeart = function (active) {
+    if (active) {
+        this.heart += 1;
+    } else if (this.heart - 1 > 0) {
+        this.heart -= 1;
+    }
+}
+// 绘制得分
+Util.prototype.renderScore = function () {
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '24px Arial';
+    ctx.fillText('得分：' + this.score.toString(), 20, 34);
+}
+// 更新得分
+Util.prototype.updateScore = function (active) {
+    if (active) {
+        this.score += 10;
+    } else if (this.score - 10 > 0) {
+        this.score -= 10;
+    }
+}
+// 绘制顶栏
+Util.prototype.renderBanner = function () {
+    ctx.fillStyle = '#5FC148';
+    ctx.fillRect(0, 0, 505, 50);
+    this.renderScore();
+    this.renderHeart();
+}
+// 重置逻辑
+Util.prototype.reset = function () {
+    this.score = 0;
+    this.heart = 3;
+}
+
 // 每网格的宽与高
 var TILE_WIDTH = 101,
     TILE_HEIGHT = 83;
@@ -56,6 +103,7 @@ Enemy.prototype.checkCollisions = function () {
         (enemyRect.y < playerRect.y + playerRect.height) &&
         (enemyRect.y + enemyRect.height > playerRect.y);
     if (isColl) {
+        util.updateHeart(false);
         player.reset();
     };
 }
@@ -151,6 +199,7 @@ var allEnemies = new Array(3);
     this[i] = new Enemy(-TILE_WIDTH, 58 + TILE_HEIGHT * i);
 }, allEnemies);
 var player = new Player(202, 390);
+var util = new Util(0, 3);
 
 // 监听用户按键事件
 document.addEventListener('keyup', function(e) {

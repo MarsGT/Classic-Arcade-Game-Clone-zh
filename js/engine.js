@@ -46,7 +46,13 @@ var Engine = (function (global) {
         var isWin = player.isWin();
         if (isWin) {
             alert('You WIN!');
+            util.updateScore(true);
             reset();
+        } else {
+            if (util.heart === 0) {
+                alert('You LOSE!');
+                reset();
+            }
         }
 
         updateEntities(dt);
@@ -85,6 +91,9 @@ var Engine = (function (global) {
             }
         }
 
+        // 绘制顶栏
+        util.renderBanner();
+
         renderEntities();
     }
 
@@ -118,6 +127,7 @@ var Engine = (function (global) {
         'images/char-pink-girl.png',
         'images/char-princess-girl.png',
         'images/grass-block.png',
+        'images/Heart.png',
         'images/stone-block.png',
         'images/water-block.png'
     ]);
