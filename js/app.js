@@ -1,5 +1,9 @@
 'use strict';
 
+// 每网格的宽与高
+var TILE_WIDTH = 101,
+    TILE_HEIGHT = 83;
+
 // 敌人对象速度数组
 var shuffle = function (arr) {
     var input = arr;
@@ -24,8 +28,8 @@ Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
     this.checkCollisions();
     // 判断是否超出地图右边，超出则回到起始位置
-    if (this.x > 505) {
-        this.x = -101;
+    if (this.x > TILE_WIDTH * 5) {
+        this.x = -TILE_WIDTH;
     }
 };
 Enemy.prototype.render = function () {
@@ -56,7 +60,7 @@ Enemy.prototype.checkCollisions = function () {
     };
 }
 Enemy.prototype.reset = function () {
-    this.x = -101;
+    this.x = -TILE_WIDTH;
 }
 
 // 玩家对象
@@ -68,11 +72,11 @@ var Player = function (x, y) {
 Player.prototype.update = function () {
     // 判断是否超出地图范围
     if (this.x < 0) {
-        this.x += 101;
-    } else if (this.x >= 505) {
-        this.x -= 101;
+        this.x += TILE_WIDTH;
+    } else if (this.x >= TILE_WIDTH * 5) {
+        this.x -= TILE_WIDTH;
     } else if (this.y > 440) {
-        this.y -= 83;
+        this.y -= TILE_HEIGHT;
     }
 }
 Player.prototype.render = function () {
@@ -127,16 +131,16 @@ Player.prototype.changePlayer = function (key) {
 Player.prototype.movePlayer = function (key) {
     switch (key) {
         case 'left':
-            this.x -= 101;
+            this.x -= TILE_WIDTH;
             break;
         case 'up':
-            this.y -= 83;
+            this.y -= TILE_HEIGHT;
             break;
         case 'right':
-            this.x += 101;
+            this.x += TILE_WIDTH;
             break;
         case 'down':
-            this.y += 83;
+            this.y += TILE_HEIGHT;
             break;
     }
 }
@@ -144,7 +148,7 @@ Player.prototype.movePlayer = function (key) {
 // 实例化对象
 var allEnemies = new Array(3);
 [0, 1, 2].forEach(function (i) {
-    this[i] = new Enemy(-101, 58 + 83 * i);
+    this[i] = new Enemy(-TILE_WIDTH, 58 + TILE_HEIGHT * i);
 }, allEnemies);
 var player = new Player(202, 390);
 
