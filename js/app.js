@@ -33,6 +33,11 @@ Util.prototype.updateScore = function (active) {
     } else if (this.score - 10 > 0) {
         this.score -= 10;
     }
+    // 分数奖励
+    if (this.score == 100) {
+        this.heart += 1;
+        this.score = 0;
+    }
 }
 // 绘制顶栏
 Util.prototype.renderBanner = function () {
