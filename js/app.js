@@ -1,3 +1,5 @@
+'use strict';
+
 // 敌人对象速度数组
 var shuffle = function (arr) {
     var input = arr;

@@ -4,7 +4,9 @@
  * 游戏引擎通过 Engine 变量提供对外访问，并且提供了全局的 Canvas 上下文供公开访问。
  */
 
-var Engine = (function(global) {
+var Engine = (function (global) {
+    'use strict';
+    
     // 定义一些变量，并创建全局 Canvas 上下文
     var doc = global.document,
         win = global.window,
