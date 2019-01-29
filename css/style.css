@@ -1,3 +1,10 @@
 body {
     text-align: center;
 }
+ol {
+    display: block;
+    width: 30%;
+    margin: auto;
+    text-align: left;
+    line-height: 2;
+}
